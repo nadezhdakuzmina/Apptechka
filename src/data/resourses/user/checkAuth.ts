@@ -1,14 +1,27 @@
 import axios from 'axios';
 import { RESOURCE_URL } from './constants';
 
-import { DirtyUserAuthData } from './types';
+import type { DirtyUserCheckAuthData } from './types';
 
 const METHOD_URL = `${RESOURCE_URL}/checkAuth`;
 
-export const checkAuth = async (): Promise<string> => {
+export const checkAuth = async (token: string) => {
   return axios(METHOD_URL, {
-    withCredentials: true,
+    method: 'POST',
+    data: { token },
   })
     .then((res) => res.data)
-    .then((data: DirtyUserAuthData) => data.token);
+    .then((data: DirtyUserCheckAuthData) => {
+      if (data.message === 'success') {
+        return {
+          token,
+          user: data.user,
+        };
+      }
+
+      return null;
+    })
+    .catch(() => {
+      throw 'Check auth: error';
+    });;
 };

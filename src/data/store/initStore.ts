@@ -1,31 +1,32 @@
-import { fetchItems as fetchFrigeItems} from '../resourses/frige/fetchItems';
-import { fetchItems as fetchFoodListItems} from '../resourses/foodList/fetchItems';
+import { fetchItems as fetchFrigeItems} from '../resourses/aptechka/fetchItems';
+import { fetchItems as fetchFoodListItems} from '../resourses/buyList/fetchItems';
 
 
 import type { State } from '../types';
 import { initUser } from './initUser';
 
-export const initStore = async (initToken?: string): Promise<State> => {
-  const token = initToken || await initUser();
+export const initStore = async (initToken: string): Promise<State> => {
+  const data = await initUser(initToken);
 
   const [
-    frigeItems,
-    foodListItems,
-  ] = token ? await Promise.all([
-    fetchFrigeItems(token).catch(() => null),
-    fetchFoodListItems(token).catch(() => null),
+    aptechkaItems,
+    buyListItems,
+  ] = data?.token ? await Promise.all([
+    fetchFrigeItems(data?.token).catch(() => null),
+    fetchFoodListItems(data?.token).catch(() => null),
   ]) : [];
 
   return {
     core: {
-      token,
+      token: data?.token || null,
       isLoaded: false,
+      user: data?.user,
     },
-    frige: {
-      items: frigeItems || [],
+    aptechka: {
+      items: aptechkaItems || [],
     },
-    foodList: {
-      items: foodListItems || [],
+    buyList: {
+      items: buyListItems || [],
     }
   };
 };

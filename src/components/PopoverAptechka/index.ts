@@ -1,0 +1,1 @@
+export { PopoverAptechka } from './PopoverAptechka';

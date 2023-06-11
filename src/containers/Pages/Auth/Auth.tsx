@@ -1,26 +1,66 @@
-import { Avatar, Button } from 'native-base';
+import { Button, Input, Text } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text } from 'react-native';
-import { AptechkaItem } from '../../../components/AptechkaItem/aptechkaItem';
-import { PopoverList } from '../../../components/PopoverList/popoverList';
-import styles from '../Profile/styles';
+import { View } from 'react-native';
+import styles from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { authUserResolver } from '../../../data/actions/core/resolvers';
+import { authError as authErrorSelector } from '../../../data/selectors/authError';
 
-export const Auth = () => {
+export const Auth: React.FC = () => {
+  const [username, setUsername] = React.useState<string>('');
+  const [password, setPassword] = React.useState<string>('');
+
+  const { navigate } = useNavigation();
+
+  const dispatch = useDispatch();
+  const authError = useSelector(authErrorSelector);
+
+  const submitHandle = React.useCallback(() => {
+    // @ts-ignore
+    dispatch(authUserResolver({
+      username,
+      password,
+    }));
+  }, [username, password]);
+
   return (
     <View style={styles.root}>
       <View style={styles.container}>
-        <Avatar 
-          bg="green.500" 
-          source={{
-            uri: "https://bit.ly/broken-link"
-          }}
-          size='lg'
+        <View style={styles.input}>
+          <Input
+            size="lg"
+            variant="filled"
+            placeholder="Логин"
+            onChangeText={setUsername}
+          />
+        </View>
+        <View style={styles.input}>
+          <Input
+            size="lg"
+            variant="filled"
+            placeholder="Пароль"
+            onChangeText={setPassword}
+          />
+        </View>
+        <Button onPress={submitHandle}>Войти</Button>
+        {authError && (
+          <Text
+            color="red.600"
+            style={styles.errorText}
+          >
+            {authError}
+          </Text>
+        )}
+        <Text
+          style={styles.goNextPage}
+          color="blue.700"
+          // @ts-ignore
+          onPress={() => navigate('registration')}
         >
-          L
-        </Avatar>
-        <Text style={styles.text}> Ваш логин</Text>
+          Регистрация
+        </Text>
       </View>
-    <Button style={styles.button}>Выйти</Button>
     </View>
     );
 };

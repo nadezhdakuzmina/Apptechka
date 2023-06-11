@@ -1,3 +1,1 @@
-import { Apptechka } from "./Apptechka";
-
-export default Apptechka;
+export { Apptechka } from './Apptechka';

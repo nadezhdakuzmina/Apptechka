@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import { frige } from './reducers/frige';
-import { foodList } from './reducers/foodList';
+import { aptechka } from './reducers/aptechka';
+import { buyList } from './reducers/buyList';
 import { core } from './reducers/core';
 
 export const reducer = combineReducers({
-  frige,
+  aptechka,
   core,
-  foodList,
+  buyList,
 });

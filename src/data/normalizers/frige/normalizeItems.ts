@@ -1,5 +1,5 @@
-import { FrigeItem } from '../../reducers/frige/types';
-import type { DirtyItem } from '../../resourses/frige/types';
+import { FrigeItem } from '../../reducers/aptechka/types';
+import type { DirtyItem } from '../../resourses/aptechka/types';
 
 export const normalizeItems = (data: DirtyItem[]): FrigeItem[] => data.map((item) => ({
   ...item,

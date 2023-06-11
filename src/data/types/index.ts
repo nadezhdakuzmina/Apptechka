@@ -1,9 +1,9 @@
 import type { CoreState } from '../reducers/core';
-import type { FoodListState } from '../reducers/foodList';
-import type { FrigeState } from '../reducers/frige';
+import type { BuyListState } from '../reducers/buyList';
+import type { AptechkaState } from '../reducers/aptechka';
 
 export interface State {
-  frige: FrigeState;
+  aptechka: AptechkaState;
   core: CoreState;
-  foodList: FoodListState;
+  buyList: BuyListState;
 }

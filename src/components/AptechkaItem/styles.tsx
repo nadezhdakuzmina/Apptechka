@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  foodItem: {
+  root: {
     width: '100%',
     backgroundColor: '#fff',
     flexDirection: 'row',
@@ -12,16 +12,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   foodType: {
-    flex: 0,
     width: 20,
     height: 20,
-    borderRadius: 3,
-    margin: 10,
-    backgroundColor: '#1890FF',
-  },
-  text: {
-    fontSize: 20,
-  },
+    borderRadius: 5,
+    backgroundColor: 'blue',
+  }
 });
 
 export default styles;

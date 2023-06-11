@@ -1,52 +1,36 @@
 import { useDispatch, Provider, useSelector } from 'react-redux';
 import { registerRootComponent } from 'expo';
-import { NativeBaseProvider } from 'native-base';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
 import { createStore } from './data/store';
-import { updateStore } from './data/actions/core/resolvers';
-import { State } from './data/types';
-import { MyTabs } from './containers/Navigation/navigation';
-import Registration from './containers/Pages/Registration';
-import Auth from './containers/Pages/Auth';
+import { MainNavigation } from './containers/MainNavigation';
+import { InitialNavigation } from './containers/InitialNavigation';
+import { isUserAuthed } from './data/selectors/isUserAuthed';
+import { initApp } from './data/actions/core/resolvers';
+import { isAppLoaded } from './data/selectors/isAppLoaded';
+import { Loader } from './containers/Pages/Loader';
 
 const store = createStore();
-const Stack = createNativeStackNavigator();
 
 const DataLayer = () => {
   const dispatch = useDispatch();
-  const data = useSelector((state: State) => state.core);
 
-  console.log(data);
+  const isLoaded = useSelector(isAppLoaded);
+  const isUserLoggedIn = useSelector(isUserAuthed);
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(updateStore('ec47b1e6adf0711fd39417322291c977'));
-    
-    setTimeout(() => { console.log(store.getState()); }, 3000);
+    dispatch(initApp());
   }, []);
 
-  if (data) {
-    return (
-      <NativeBaseProvider>
-          <NavigationContainer>
-            <MyTabs />
-          </NavigationContainer>
-      </NativeBaseProvider>
-    );
+  if (!isLoaded) {
+    return <Loader />;
   }
-  return (
-    <NativeBaseProvider>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Registration}
-        />
-        <Stack.Screen name="Auth" component={Auth} />
-      </Stack.Navigator>
-    </NativeBaseProvider>
-  );
+
+  if (isUserLoggedIn) {
+    return <MainNavigation />;
+  }
+
+  return <InitialNavigation />;
 };
 
 const App = () => (

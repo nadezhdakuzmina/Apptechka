@@ -1,3 +1,1 @@
-import { AptechkaItem } from "./aptechkaItem";
-
-export default AptechkaItem;
+export { AptechkaItem } from './AptechkaItem';

@@ -5,6 +5,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  scroll: {
+    width: '100%'
+  }
 });
 
 export default styles;

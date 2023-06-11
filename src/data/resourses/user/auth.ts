@@ -3,18 +3,20 @@ import axios from 'axios';
 import { RESOURCE_URL } from './constants';
 
 import type { DirtyUserAuthData } from './types';
-import type { User } from '../../actions/core/types';
+import type { UserAuth } from '../../actions/core/types';
 
 const METHOD_URL = `${RESOURCE_URL}/auth`;
 
-export const auth = async (user: User): Promise<string> => {
+export const auth = async (user: UserAuth) => {
   return axios(METHOD_URL, {
     method: 'POST',
-    withCredentials: true,
     data: {
       ...user
     },
   })
-    .then((res) => res.data)
-    .then((data: DirtyUserAuthData) => data.token);
+    .then((res) => res.data as DirtyUserAuthData)
+    .catch((res) => {
+      console.log('resData:', res.data);
+      throw 'Auth: error';
+    });
 };
