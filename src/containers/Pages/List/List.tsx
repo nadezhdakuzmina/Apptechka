@@ -20,11 +20,25 @@ export const List = () => {
     setPopoverOpen(true);
   }, []);
 
+  const sortedList = React.useMemo(() => {
+    return items.sort(({ isChecked: a }, { isChecked: b }) => {
+      if (a === b) {
+        return 0;
+      }
+
+      if (a) {
+        return 1;
+      }
+
+       return -1;
+    });
+  }, [items]);
+
   return (
     <SafeAreaView style={styles.container}>
       {isPopoverOpen && <PopoverList onClose={handleClosePopover} />}
       <ScrollView style={styles.scroll}>
-        {items.map((item) => (
+        {sortedList.map((item) => (
           <ListItem key={item.id} {...item} />
         ))}
       </ScrollView>

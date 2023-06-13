@@ -5,21 +5,33 @@ import styles from './styles';
 import { useDispatch } from 'react-redux';
 import { addItemResolver } from '../../data/actions/aptechka/resolvers';
 import { PopoverAptechkaProps } from './types';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 export const PopoverAptechka: React.FC<PopoverAptechkaProps> = ({ onClose }) => {
   const [name, setName] = React.useState('');
   const [foodType, setType] = React.useState('');
+  const [date, setDate] = React.useState(new Date());
 
   const dispatch = useDispatch();
 
   const handleSubmit = React.useCallback(() => {
     // @ts-ignore
-    dispatch(addItemResolver({ name, foodType, expires: Date.now() })).then((result) => {
+    dispatch(addItemResolver({
+      name,
+      foodType,
+      expires: date.getTime(),
+    })).then((result: boolean) => {
       if (result) {
         onClose();
       }
     });
-  }, [name, foodType, dispatch, onClose]);
+  }, [name, foodType, date, dispatch, onClose]);
+
+  const handleDateChange = React.useCallback((_: unknown, date?: Date) => {
+    if (date) {
+      setDate(date);
+    }
+  }, []);
 
   return (
     <Modal
@@ -37,6 +49,10 @@ export const PopoverAptechka: React.FC<PopoverAptechkaProps> = ({ onClose }) => 
           <FormControl>
             <FormControl.Label>Тип</FormControl.Label>
             <Input onChangeText={setType} />
+          </FormControl>
+          <FormControl>
+            <FormControl.Label>Годен до</FormControl.Label>
+            <RNDateTimePicker mode="date" value={date} onChange={handleDateChange} />
           </FormControl>
         </Modal.Body>
         <Modal.Footer>

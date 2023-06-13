@@ -6,8 +6,9 @@ import styles from './styles';
 import { useDispatch } from 'react-redux';
 import { removeItemResolver } from '../../data/actions/aptechka/resolvers';
 import type { AptechkaItem as AptechkaItemType } from '../../data/reducers/aptechka';
+import { getExpiresInfo } from './getExpiresInfo';
 
-export const AptechkaItem: React.FC<AptechkaItemType> = ({ id, name, foodType }) => {  
+export const AptechkaItem: React.FC<AptechkaItemType> = ({ id, name, foodType, expires }) => {  
   const dispatch = useDispatch();
 
   const handleRemove = React.useCallback(() => {
@@ -31,11 +32,18 @@ export const AptechkaItem: React.FC<AptechkaItemType> = ({ id, name, foodType })
     return color;
   }, []);
 
+  const expiresInfo = React.useMemo(() => {
+    return getExpiresInfo(expires);
+  }, [expires]);
+
   return (
     <View style={styles.root}>
       <View style={[styles.foodType, { backgroundColor: foodTypeColor }]} />
-      <Text>{foodType}</Text>
-      <Text>{name}</Text>
+      <View style={styles.info}>
+        <Text style={styles.infoItem}>{foodType}</Text>
+        <Text style={styles.infoItem}>{name}</Text>
+        <Text  style={[styles.infoItem, { color: expiresInfo.color }]}>{expiresInfo.message}</Text>
+      </View>
       <MaterialCommunityIcons
         name="close"
         color='#555'

@@ -16,6 +16,15 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 5,
     backgroundColor: 'blue',
+  },
+  info: {
+    flex: 1,
+    marginLeft: 10,
+    flexWrap: 'wrap',
+    flexDirection: 'row'
+  },
+  infoItem: {
+    marginRight: 10,
   }
 });
 
