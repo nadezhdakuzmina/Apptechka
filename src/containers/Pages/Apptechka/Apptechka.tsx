@@ -28,7 +28,7 @@ export const Apptechka = () => {
           <AptechkaItem key={item.id} {...item} />
         )) : (
           <View style={styles.noItems}>
-            <Text style={styles.noItemsText}>Список пуск</Text>
+            <Text style={styles.noItemsText}>Список пуст</Text>
           </View>
         )}
       </ScrollView>
