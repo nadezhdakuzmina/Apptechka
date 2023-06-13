@@ -1,13 +1,14 @@
-import { AddIcon, Fab, ScrollView } from 'native-base';
+import { AddIcon, Fab, ScrollView, Text, View } from 'native-base';
 import React from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import ListItem from '../../../components/ListItem';
 import { PopoverList } from '../../../components/PopoverList';
 import styles from './styles';
 import { useSelector } from 'react-redux';
 import { buyListItems } from '../../../data/selectors/buyListItems';
 
-export const List = () => {
+// @ts-ignore
+export const List = (props) => {
   const [isPopoverOpen, setPopoverOpen] = React.useState(false);
 
   const items = useSelector(buyListItems);
@@ -38,14 +39,19 @@ export const List = () => {
     <SafeAreaView style={styles.container}>
       {isPopoverOpen && <PopoverList onClose={handleClosePopover} />}
       <ScrollView style={styles.scroll}>
-        {sortedList.map((item) => (
+        {sortedList.length ? sortedList.map((item) => (
           <ListItem key={item.id} {...item} />
-        ))}
+        )) : (
+          <View style={styles.noItems}>
+            <Text style={styles.noItemsText}>Список пуск</Text>
+          </View>
+        )}
       </ScrollView>
       <Fab
+        renderInPortal={false}
         onPress={handleOpenPopover}
         shadow={2}
-        bottom={120}
+        bottom={10}
         right={10}
         size="lg"
         icon={<AddIcon />}

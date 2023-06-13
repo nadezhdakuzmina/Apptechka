@@ -56,8 +56,6 @@ export const addItemResolver = (item: Omit<BuyListItem, 'id' | 'isChecked'>) => 
       return false;
     }
 
-    console.log('item', item);
-
     const hasBeenAdded = await addItem(core.token, item)
       .catch(console.error);
 

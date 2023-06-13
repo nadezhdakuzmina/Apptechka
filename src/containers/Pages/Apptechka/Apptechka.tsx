@@ -1,4 +1,4 @@
-import { AddIcon, Fab, ScrollView } from 'native-base';
+import { AddIcon, Fab, ScrollView, Text, View } from 'native-base';
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import styles from './styles';
@@ -24,14 +24,19 @@ export const Apptechka = () => {
     <SafeAreaView style={styles.container}>
       {isPopoverOpen && <PopoverAptechka onClose={handleClosePopover} />}
       <ScrollView style={styles.scroll}>
-        {items.map((item) => (
+        {items.length ? items.map((item) => (
           <AptechkaItem key={item.id} {...item} />
-        ))}
+        )) : (
+          <View style={styles.noItems}>
+            <Text style={styles.noItemsText}>Список пуск</Text>
+          </View>
+        )}
       </ScrollView>
       <Fab
+        renderInPortal={false}
         onPress={handleOpenPopover}
         shadow={2}
-        bottom={120}
+        bottom={10}
         right={10}
         size="lg"
         icon={<AddIcon />}

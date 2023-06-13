@@ -1,11 +1,12 @@
 import { Button, FormControl, Input, Modal } from 'native-base';
 import React from 'react';
 
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+
 import styles from './styles';
 import { useDispatch } from 'react-redux';
 import { addItemResolver } from '../../data/actions/aptechka/resolvers';
 import { PopoverAptechkaProps } from './types';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 export const PopoverAptechka: React.FC<PopoverAptechkaProps> = ({ onClose }) => {
   const [name, setName] = React.useState('');

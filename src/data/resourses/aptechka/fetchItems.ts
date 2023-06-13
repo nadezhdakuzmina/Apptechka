@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { RESOURCE_URL } from './constants';
 
-import { normalizeItems } from '../../normalizers/frige/normalizeItems';
+import { normalizeItems } from '../../normalizers/aptechka/normalizeItems';
 
 const METHOD_URL = RESOURCE_URL;
 

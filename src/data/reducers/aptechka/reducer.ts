@@ -12,7 +12,7 @@ export const aptechka = (state = initialState, action: ActionTypes) => {
     case UPDATE_ITEMS:
       return {
         ...state,
-        items: action.items,
+        items: [...action.items],
       };
 
     case REMOVE_ITEM:

@@ -50,7 +50,7 @@ export const Registration: React.FC = () => {
             onChangeText={setPassword}
           />
         </View>
-        <Button onPress={submitHandle}>Войти</Button>
+        <Button onPress={submitHandle}>Регистрация</Button>
         {registerError && (
           <Text
             color="red.600"
